@@ -3,12 +3,17 @@ import java.util.Calendar;
 import java.text.SimpleDateFormat;
 
 public class Main {
-    static String name; static int ft; static int inches; static double weight; static double lowWeight; static double highWeight; static double bmiCurrent; static String statusCurrent;
+    static String name; static int ft; static int inches; static int cm; static double weight; static double weightMetric; static double lowWeight; static double highWeight; static double bmiCurrent; static String statusCurrent;
     static Scanner input = new Scanner(System.in);
     static final String highlight = "\u001B[43m"; static final String reset = "\u001B[0m";
 
     public static void main(String[] args) {
-        welcome();
+        englishBMICalculator();
+        metricBMICalculator();
+    }
+
+    static void englishBMICalculator() {
+        welcome("English");
         getInputs();
         bmiCurrent = calculateBMI(ft, inches, weight);
         statusCurrent = calculateStatus(bmiCurrent);
@@ -18,8 +23,18 @@ public class Main {
         sayBye();
     }
 
-    static void welcome() {
-        System.out.printf("-".repeat(90) + "\n-- Welcome to:\n-- %70s\n-- %175s", "BODY MASS INDEX (BMI) Computation, CSC 215, English Version", "by Allie Young\n" + "-".repeat(90) + "\n\n");
+    static void metricBMICalculator() {
+        welcome("Metric");
+        getInputsMetric();
+    }
+
+    static void welcome(String version) {
+        if(version.toLowerCase().startsWith("e")) {
+            version = "English";
+        } else {
+            version = "Metric";
+        }
+        System.out.printf("-".repeat(90) + "\n-- Welcome to:\n-- %70s\n-- %175s", "BODY MASS INDEX (BMI) Computation, CSC 215, %s Version", "by Allie Young\n" + "-".repeat(90) + "\n\n", version);
     }
 
     static void getInputs() {
@@ -30,6 +45,15 @@ public class Main {
         inches = input.nextInt();
         System.out.printf("Please enter weight in pounds for %s: ", name);
         weight = input.nextDouble();
+    }
+
+    static void getInputsMetric() {
+        System.out.print("Please enter your full name: ");
+        name = input.nextLine();
+        System.out.printf("Please enter height in centimeters for %s: ", name);
+        cm = input.nextInt();
+        System.out.printf("Please enter weight in kilograms for %s: ", name);
+        weightMetric = input.nextDouble();
     }
 
     static double calculateBMI(int ft, int inches, double weight) {
