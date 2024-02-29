@@ -20,6 +20,7 @@ public class BMICalculator {
             }
             System.out.println();
             if(version.toLowerCase().startsWith("e")) {
+                //to consume the new line char so the program does not take it in as the user's name
                 input.nextLine();
                 englishBMICalculator();
             } else {
@@ -119,48 +120,60 @@ public class BMICalculator {
     }
 
     static void displayTable(double low, double high) {
+        //header
         System.out.printf("\n" + "-".repeat(55) + "\n|  %-10s|  %-10s|  %-25s|\n" + "-".repeat(55) + "\n", "WEIGHT", "BMI", "WEIGHT STATUS");
+        //low line
         double bmiLow = calculateBMI(ft, inches, low);
         String statusLow = calculateStatus(bmiLow);
         System.out.printf("|  %-10.2f|  %-10.2f|  %-18s" + highlight + "(LOW)" + reset + "  |\n", low, bmiLow, statusLow);
+        //checks if user's current weight is between low weight and second entry in table. if it is, prints
         if(low <= weight && weight <= low+5.5) {
             System.out.printf("|  %-10.2f|  %-10.2f|  %-17s(this)  |\n", weight, bmiCurrent, statusCurrent);
         }
         for(double i = low+5.5; i < high; i += 5.5) {
+            //if current weight is equal to the second entry, it has already been printed (see above) so iteration can be skipped
             if(weight == low+5.5) {
                 continue;
             }
             double bmi = calculateBMI(ft, inches, i);
             String status = calculateStatus(bmi);
             System.out.printf("|  %-10.2f|  %-10.2f|  %-25s|\n", i, bmi, status);
+            //checks if user's current weight is between this entry and next entry. if it is, prints
             if(i <= weight && weight < i+5.5) {
                 System.out.printf("|  %-10.2f|  %-10.2f|  %-17s(this)  |\n", weight, bmiCurrent, statusCurrent);
             }
         }
+        //high line
         double bmiHigh = calculateBMI(ft, inches, high);
         String statusHigh = calculateStatus(bmiHigh);
         System.out.printf("|  %-10.2f|  %-10.2f|  %-17s" + highlight + "(HIGH)" + reset + "  |\n" + "-".repeat(55), high, bmiHigh, statusHigh);
     }
 
     static void displayTableMetric(double low, double high) {
+        //header
         System.out.printf("\n" + "-".repeat(55) + "\n|  %-10s|  %-10s|  %-25s|\n" + "-".repeat(55) + "\n", "WEIGHT", "BMI", "WEIGHT STATUS");
+        //low line
         double bmiLow = calculateBMIMetric(cm, low);
         String statusLow = calculateStatus(bmiLow);
         System.out.printf("|  %-10.2f|  %-10.2f|  %-18s" + highlight + "(LOW)" + reset + "  |\n", low, bmiLow, statusLow);
+        //checks if user's current weight is between low weight and second entry in table. if it is, prints
         if(low <= weightMetric && weightMetric <= low+2.5) {
             System.out.printf("|  %-10.2f|  %-10.2f|  %-17s(this)  |\n", weightMetric, bmiCurrent, statusCurrent);
         }
         for(double i = low+2.5; i < high; i += 2.5) {
+            //if current weight is equal to the second entry, it has already been printed (see above) so iteration can be skipped
             if(weightMetric == low+2.5) {
                 continue;
             }
             double bmi = calculateBMIMetric(cm, i);
             String status = calculateStatus(bmi);
             System.out.printf("|  %-10.2f|  %-10.2f|  %-25s|\n", i, bmi, status);
+            //checks if user's current weight is between this entry and next entry. if it is, prints
             if(i <= weightMetric && weightMetric < i+2.5) {
                 System.out.printf("|  %-10.2f|  %-10.2f|  %-17s(this)  |\n", weightMetric, bmiCurrent, statusCurrent);
             }
         }
+        //high line
         double bmiHigh = calculateBMIMetric(cm, high);
         String statusHigh = calculateStatus(bmiHigh);
         System.out.printf("|  %-10.2f|  %-10.2f|  %-17s" + highlight + "(HIGH)" + reset + "  |\n" + "-".repeat(55), high, bmiHigh, statusHigh);
